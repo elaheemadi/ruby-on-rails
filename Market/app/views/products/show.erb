@@ -1,0 +1,43 @@
+<div class="container">
+<%= link_to "Return to Main", root_path %>
+<header>
+  <h1>Show Products</h1>
+</header>
+<table class="table table-hover table-inverse">
+  <thead class="thead-dark">
+    <tr >
+      <th>Picture</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody >
+    <% @product.each do |item| %>
+    <tr class="table-info">
+      <td>
+        <%= item.image %>
+      </td>
+      <td>
+        <%= item.name %>
+      </td>
+      <td>
+        <%= item.description %>
+      </td>
+      <td>
+        <%= item.price %>
+      </td>
+      <td>
+        <%= link_to "Edit", edit_product_path(:id => item.id) %>
+      </td>
+      <td>
+        <%= link_to "Delete", product_path(:id => item.id), method: :delete  %>
+      </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>

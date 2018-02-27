@@ -1,0 +1,104 @@
+<div class="conainer">
+<%= link_to "Main Menu", root_path %>
+
+<header>
+        <h1>This is Our Store</h1>
+</header>
+
+<script>
+name_list = Array();
+total = Array();
+price = Array();
+
+    function add(name, newprice){
+
+        if (total[name] == null){
+            name_list.push(name);
+            total[name] = 0;
+            price[name] = newprice;
+        }
+
+        total[name] += 1;
+        $('#'+name).html(total[name]);
+        $('#'+name+'total').html(Math.round( (total[name] * price[name]),2) );
+        updateTotal();
+
+    }
+
+    function sub(name, newprice){
+
+        if (total[name] == null){
+            name_list.push(name);
+            total[name] = 0;
+            price[name] = newprice;
+        }
+
+        if (total[name] > 0 ){
+            total[name] -= 1;
+            $('#'+name).html(total[name]);
+            $('#'+name+'total').html(Math.round( (total[name] * price[name]),2) );
+            updateTotal();
+        }
+
+    }
+
+    function updateTotal(){
+        totalval = 0;
+
+        name_list.forEach(function(item){
+            totalval += total[item] * price[item];
+            
+        });
+
+        $('#hiddentotal').val(Math.round(totalval, 2));
+    }
+
+</script>
+
+   <section>
+     
+           <table class="table table-stripped">
+                <thead><tr>
+                        <th>Picture</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Units</th>
+                        <th>Units x Price</th>
+                        <th>Add/Remove</th>
+                </tr></thead>
+
+                <tbody>
+                        <% @products.each do |item| %>
+                        <tr>
+                                <td><%= item.image %></td>
+                                <td><%= item.name %></td>
+                                <td><%= item.description %></td>
+                                <td><%= item.price %></td>
+                                <td><div id='<%= item.id %>_unit'>0</div></td>
+                                <td><div id='<%= item.id %>_unittotal'>0</div></td>
+                                <td><button onclick="add('<%= item.id %>_unit', '<%= item.price %>');"> + </button><button onclick="sub('<%= item.id %>_unit', '<%= item.price%>');"> - </button></td>
+                        <tr/>
+                        <% end %>
+                </tbody>
+        </table>
+     
+  </section>
+  <br/>
+  <div class="row">
+      <div class="col-md-6 col-md-offset-3 well">
+          <section>
+        
+              <%= form_tag url_for(:controller => 'cart', :action => 'checkout'), :method => 'post' do %>
+		          <div class="hidden">
+                  <input id="hiddentotal" name="hiddentotal" type="text" value="0" /><br/>
+			        </div>
+			        <div class="bb">
+                  <button type="button" class="btn btn-secondary btn-lg" >  <%= submit_tag "Checkout" %></button>
+			        </div>
+              <% end %>
+         </section>
+
+       </div>
+    </div>
+</div>

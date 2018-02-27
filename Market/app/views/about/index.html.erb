@@ -1,0 +1,17 @@
+<section id="about" class="content-section text-center">
+<h1> About us </h1>
+<img id="drag1" src="<%= asset_path('about1 .jpg') %>" draggable="true" ondragstart="drag(event)" width="950" height="340"
+</section>
+
+<section id="about" class="content-section text-center">
+<span class="border border-secondary">
+  <p>
+  We use our own and third-party cookies to improve your experience and our services,
+</P><p>by analysing how people use our website.</p><P>
+By continuing to use the website, we understand 
+that you accept their use. </P>
+  </span>
+  
+  <%= link_to '<button type="button" class="btn btn-primary">Contact Us</button>'.html_safe, controller:"contact" %>
+ 
+</section>
